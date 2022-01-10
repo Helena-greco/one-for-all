@@ -1,26 +1,24 @@
-DROP DATABASE IF EXISTS SpotifyClone;
-
-CREATE DATABASE SpotifyClone;
+CREATE DATABASE IF NOT EXISTS SpotifyClone;
 
 USE SpotifyClone;
 
 CREATE TABLE plans(
-  plano_id INT PRIMARY KEY AUTOINCREMENT,
+  plano_id INT PRIMARY KEY AUTO_INCREMENT,
   plano VARCHAR(50) NOT NULL,
-  valor FLOAT(2) NOT NULL,
+  valor FLOAT(2) NOT NULL
 ) engine = InnoDB;
 
 CREATE TABLE users(
-  usuario_id INT PRIMARY KEY AUTOINCREMENT,
+  usuario_id INT PRIMARY KEY AUTO_INCREMENT,
   usuario VARCHAR(100) NOT NULL,
   idade INT NOT NULL,
   plano_id INT NOT NULL,
-  FOREIGN KEY (plano_id) REFERENCES planos(plano_id)
+  FOREIGN KEY (plano_id) REFERENCES plans(plano_id)
 ) engine = InnoDB;
 
 CREATE TABLE artist(
-  artista_id INT PRIMARY KEY AUTOINCREMENT,
-  nome_artista VARCHAR(100) NOT NULL,
+  artista_id INT PRIMARY KEY AUTO_INCREMENT,
+  nome_artista VARCHAR(100) NOT NULL
 ) engine = InnoDB;
 
 CREATE TABLE following_artist(
@@ -32,7 +30,7 @@ CREATE TABLE following_artist(
 ) engine = InnoDB;
 
 CREATE TABLE album(
-  album_id INT PRIMARY KEY AUTOINCREMENT,
+  album_id INT PRIMARY KEY AUTO_INCREMENT,
   album VARCHAR(100) NOT NULL,
   ano_lancamento YEAR NOT NULL,
   artista_id INT NOT NULL,
@@ -40,13 +38,11 @@ CREATE TABLE album(
 ) engine = InnoDB;
 
 CREATE TABLE songs(
-  cancao_id INT PRIMARY KEY AUTOINCREMENT,
+  cancao_id INT PRIMARY KEY AUTO_INCREMENT,
   cancao VARCHAR(100) NOT NULL,
   duracao_segundos INT NOT NULL,
   album_id INT NOT NULL,
-  artista_id INT NOT NULL,
-  FOREIGN KEY (album_id) REFERENCES album(album_id),
-  FOREIGN KEY (artista_id) REFERENCES artist(artista_id)
+  FOREIGN KEY (album_id) REFERENCES album(album_id)
 ) engine = InnoDB;
 
 CREATE TABLE reproduction_history(
@@ -55,7 +51,7 @@ CREATE TABLE reproduction_history(
   data_reproducao DATETIME NOT NULL,
   CONSTRAINT PRIMARY KEY (usuario_id,cancao_id),
   FOREIGN KEY (usuario_id) REFERENCES users(usuario_id),
-  FOREIGN KEY (cancao_id) REFERENCES songs(cancao_id),
+  FOREIGN KEY (cancao_id) REFERENCES songs(cancao_id)
 ) engine = InnoDB;
 
 INSERT INTO plans (plano, valor)
@@ -125,48 +121,48 @@ VALUES
   ('No guarantees', 2015, 5),
   ('Apparatus', 2015, 6);
 
-INSERT INTO songs (nome_cancao, duracao_segundos, artista_id, album_id)
+INSERT INTO songs (cancao, album_id, duracao_segundos)
 VALUES
-  ('Soul For Us', 200, 1, 1),
-	('Reflection Of Magic', 163, 1, 1),
-	('Dance With Her One', 116, 1, 1),
-	('Troubles Of My Inner Fire', 203, 1, 2),
-	('Time Fireworks', 152, 1, 2),
-	('Magic Circus', 105, 2, 3),
-	('Honey, So Do I', 207, 2, 3),
-	("Sweetie, Let's Go Wild", 139, 2, 3),
-	('She Knows', 244, 2, 3),
-	('Fantasy For Me', 100, 3, 4),
-	('Celebration Of More', 146, 3, 4),
-  ('Rock His Everything', 223, 3, 4),
-  ('Home Forever', 231, 3, 4),
-  ('Diamond Power', 241, 3, 4),
-  ("Let's Be Silly", 132, 3, 4),
-  ('Thang Of Thunder', 240, 4, 5),
-  ('Words Of Her Life', 185, 4, 5),
-  ('Without My Streets', 176, 4, 5),
-  ('Need Of The Evening', 190, 4, 6),
-  ('History Of My Roses', 222, 4, 6),
-  ('Without My Love', 111, 4, 6),
-  ('Walking And Game', 123, 4, 6),
-  ('Young And Father', 197, 4, 6),
-  ('Finding My Traditions', 179, 5, 7),
-  ('Walking And Man', 229, 5, 7),
-  ('Hard And Time', 135, 5, 7),
-  ("Honey, I'm A Lone Wolf", 150, 5, 7),
-  ("She Thinks I Won't Stay Tonight", 166, 5, 8),
-  ("He Heard You're Bad For Me", 154, 5, 8),
-  ("He Hopes We Can't Stay", 210, 5, 8),
-  ('I Know I Know', 117, 5, 8),
-  ("He's Walking Away", 159, 5, 9),
-  ("He's Trouble", 138, 5, 9),
-  ('I Heard I Want To Bo Alone', 120, 5, 9), 
-  ('I Ride Alone', 5, 9, 151),    
-  ('Honey', 79, 6, 10),
-  ('You Cheated On Me', 95, 6, 10),
-  ("Wouldn't It Be Nice", 213, 6, 10),
-  ('Baby', 136, 6, 10),
-  ('You Make Me Feel So..', 83, 6, 10);
+  ('Soul For Us', 1, 200),
+  ('Reflections Of Magic', 1, 163),
+  ('Dance With Her Own', 1, 116),
+  ('Troubles Of My Inner Fire', 2, 203),
+  ('Time Fireworks', 2, 152),
+  ('Magic Circus', 3, 105),
+  ('Honey, So Do I', 3, 207),
+  ("Sweetie, Let's Go Wild", 3, 139),
+  ('She Knows', 3, 244),
+  ('Fantasy For Me', 4, 100),
+  ('Celebration Of More', 4, 146),
+  ('Rock His Everything', 4, 223),
+  ('Home Forever', 4, 231),
+  ('Diamond Power', 4, 241),
+  ("Let's Be Silly", 4, 132),
+  ('Thang Of Thunder', 5, 240),
+  ('Words Of Her Life', 5, 185),
+  ('Without My Streets', 5, 176),
+  ('Need Of The Evening', 6, 190),
+  ('History Of My Roses', 6, 222),
+  ('Without My Love', 6, 111),
+  ('Walking And Game', 6, 123),
+  ('Young And Father', 6, 197),
+  ('Finding My Traditions', 7, 179),
+  ('Walking And Man', 7, 229),
+  ('Hard And Time', 7, 135),
+  ("Honey, I'm A Lone Wolf", 7, 150),
+  ("She Thinks I Won't Stay Tonight", 8, 166),
+  ("He Heard You're Bad For Me", 8, 154),
+  ("He Hopes We Can't Stay", 8, 210),
+  ('I Know I Know', 8, 117),
+  ("He's Walking Away", 9, 159),
+  ("He's Trouble", 9, 138),
+  ('I Heard I Want To Bo Alone', 9, 120), 
+  ('I Ride Alone', 9, 151),
+  ('Honey', 10, 79),
+  ('You Cheated On Me', 10, 95),
+  ("Wouldn't It Be Nice", 10, 213),
+  ('Baby', 10, 136),
+  ('You Make Me Feel So..', 10, 83);
 
 INSERT INTO reproduction_history (usuario_id, cancao_id, data_reproducao)
 VALUES 
